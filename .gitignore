@@ -1,0 +1,10 @@
+# Test binary, built with ' go test -sc'
+*.test
+
+# Output of the go coverage tool, specifically when use with LiteIDE
+*.out
+
+# Go workspace file
+go.work
+
+*.log
