@@ -104,12 +104,19 @@ func(t *Testing)UliBinderWithParam(c *gin.Context){
 }
 
 type person struct{
-	FirstName string
+	FirstName string `binding:"required"`
 	LastName string
+	Mobile string `binding:"required,mobile"`
 }
 func(t *Testing)BodyBinderWithBindJson(c *gin.Context){
 	p := person{}
-	err := c.BindJSON(&p)
+	err := c.ShouldBindJSON(&p) 
+	if err != nil{
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"validation error": err.Error(),
+		})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"result": "BodyBinderWithBindJson",
 		"data": p,
