@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 
+	"github.com/Stevesadr/golang-backend-project/api/middlewares"
 	"github.com/Stevesadr/golang-backend-project/api/routers"
 	"github.com/Stevesadr/golang-backend-project/api/validations"
 	"github.com/Stevesadr/golang-backend-project/config"
@@ -18,8 +19,12 @@ func InitServer(){
 
 	valid, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		valid.RegisterValidation("mobile",validations.IranianMobileNumberValidation)
+		valid.RegisterValidation("mobile",validations.IranianMobileNumberValidation, true)
+		valid.RegisterValidation("password", validations.PasswordValidation, true)
 	}
+
+	// r.Use(middlewares.TestingMiddleware())
+	r.Use(middlewares.LimitByRequest())
 
 	api := r.Group("/api")
 	v1 := api.Group("/v1")

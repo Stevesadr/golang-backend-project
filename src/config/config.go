@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -12,6 +13,23 @@ type Config struct{
 	Server ServerConfig
 	Postgres PostgresConfig
 	Redis RedisConfig
+	Password PasswordConfig
+	Otp      OtpConfig
+}
+
+type PasswordConfig struct {
+	IncludeChars     bool
+	IncludeDigits    bool
+	MinLength        int
+	MaxLength        int
+	IncludeUppercase bool
+	IncludeLowercase bool
+}
+
+type OtpConfig struct {
+	ExpireTime time.Duration
+	Digits     int
+	Limiter    time.Duration
 }
 
 type ServerConfig struct{
