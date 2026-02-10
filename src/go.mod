@@ -2,6 +2,8 @@ module github.com/Stevesadr/golang-backend-project
 
 go 1.24.0
 
+toolchain go1.24.13
+
 require (
 	github.com/didip/tollbooth v4.0.2+incompatible
 	github.com/gin-gonic/gin v1.11.0

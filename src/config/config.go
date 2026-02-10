@@ -15,6 +15,7 @@ type Config struct{
 	Redis RedisConfig
 	Password PasswordConfig
 	Otp      OtpConfig
+	Cors CorsConfig
 }
 
 type PasswordConfig struct {
@@ -53,6 +54,10 @@ type RedisConfig struct{
 	MinIdleConnection int
   	PoolSize int
   	PoolTimeOut int  
+}
+
+type CorsConfig struct{
+	AllowOrigin string
 }
 
 func GetConfig() *Config{
