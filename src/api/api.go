@@ -25,6 +25,7 @@ func InitServer(){
 
 	// r.Use(middlewares.TestingMiddleware())
 	r.Use(middlewares.LimitByRequest())
+	r.Use(middlewares.Cors(cfg))
 
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
