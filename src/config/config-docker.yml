@@ -19,9 +19,13 @@ redis:
   port: 6374
   password: admin
   db: 0
-  minIdleConnection: 100
-  poolSize: 5000
+  dialTimeout: 5
+  readTimeout: 5
+  writeTimeout: 5
+  poolSize: 10
   poolTimeOut: 240 
+  idleTimeOut: 500
+  idleCheckFrequency: 500 
 password:
   includeChart: true
   includeDigits: true

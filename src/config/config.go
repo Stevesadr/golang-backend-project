@@ -51,9 +51,13 @@ type RedisConfig struct{
 	Port string
 	Password string
 	Db string
-	MinIdleConnection int
-  	PoolSize int
-  	PoolTimeOut int  
+ 	DialTimeout time.Duration 
+  	ReadTimeout time.Duration
+	WriteTimeout time.Duration 
+  	PoolSize int 
+  	PoolTimeOut time.Duration 
+	IdleTimeout time.Duration
+  	IdleCheckFrequency time.Duration
 }
 
 type CorsConfig struct{
