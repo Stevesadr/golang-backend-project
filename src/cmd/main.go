@@ -8,7 +8,12 @@ import (
 	"github.com/Stevesadr/golang-backend-project/data/cache"
 	"github.com/Stevesadr/golang-backend-project/data/db"
 )
-
+// @contact.name Steve  Sadr
+// @contact.url https://github.com/stevesadr
+// @contact.email steve.sadr@gmail.com
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main(){
 	cfg := config.GetConfig()
 

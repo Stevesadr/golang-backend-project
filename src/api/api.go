@@ -7,9 +7,12 @@ import (
 	"github.com/Stevesadr/golang-backend-project/api/routers"
 	"github.com/Stevesadr/golang-backend-project/api/validations"
 	"github.com/Stevesadr/golang-backend-project/config"
+	"github.com/Stevesadr/golang-backend-project/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitServer(cfg *config.Config){
@@ -23,6 +26,8 @@ func InitServer(cfg *config.Config){
 	r.Use(middlewares.Cors(cfg))
 
 	RegisterRoute(r)
+
+	RegisterSwagger(r, cfg)
 
 	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
@@ -46,4 +51,14 @@ func RegisterRoute(r *gin.Engine){
 		routers.HealthRouter(health)
 		routers.Testing(test)
 	}
+}
+
+func RegisterSwagger(r *gin.Engine, cfg *config.Config){
+	docs.SwaggerInfo.Title = "golang web api"
+	docs.SwaggerInfo.Description = "Backend of project"
+	docs.SwaggerInfo.Version = "1.0.0"
+	docs.SwaggerInfo.BasePath = "/api"
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", cfg.Server.Port)
+	docs.SwaggerInfo.Schemes = []string{"http"}
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

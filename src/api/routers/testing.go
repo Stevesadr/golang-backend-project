@@ -12,7 +12,7 @@ func Testing(r *gin.RouterGroup){
 	r.GET("/user/:id", t.UserById)
 	r.GET("/user/get-user-by-username/:username", t.UserByUsername)
 	r.GET("/user/:id/account", t.Account)
-	r.POST("/add-user", t.AddUser)
+	r.POST("/user/add-user", t.AddUser)
 
 	r.GET("/binder/header1", t.HeaderBinderWithGetHeader)
 	r.GET("/binder/header2", t.HeaderBinderWithBindHeader)
@@ -22,9 +22,9 @@ func Testing(r *gin.RouterGroup){
 
 	r.GET("/binder/uli1/:id/:name", t.UliBinderWithParam)
 
-	r.GET("/binder/body1", t.BodyBinderWithBindJson)
+	r.POST("/binder/body1", t.BodyBinderWithBindJson)
 
-	r.GET("/binder/form1", t.FormBinderWithBind)
+	r.POST("/binder/form1", t.FormBinderWithBind)
 
-	r.GET("/binder/file1", t.FileBinderWithFormFile)
+	r.POST("/binder/file1", t.FileBinderWithFormFile)
 }

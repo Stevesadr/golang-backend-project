@@ -13,14 +13,40 @@ func NewTesting() *Testing{
 	return &Testing{}
 }
 
+// @Summary Start Testing
+// @Description This handler Just for test
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test [get]
 func (t *Testing)TestingHandler(c *gin.Context){
 	c.JSON(http.StatusOK, helper.GenerateResponse("TestHandler", true, 0))
 }
 
+// @Summary Start Testing
+// @Description This handler Just another handler for test
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Security BearerAuth
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/users [get]
 func (t *Testing)Users(c *gin.Context){
 	c.JSON(http.StatusOK, helper.GenerateResponse("Users", true, 0))
 }
 
+// @Summary Test Get id
+// @Description This handler want to get id from the path
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param id path string true "User Id"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/users/{id} [get]
 func (t *Testing)UserById(c *gin.Context){
 	id := c.Params.ByName("id")
 	c.JSON(http.StatusOK, helper.GenerateResponse(gin.H{
@@ -29,6 +55,15 @@ func (t *Testing)UserById(c *gin.Context){
 	}, true, 0))
 }
 
+// @Summary Test Get username
+// @Description This handler want to get username from the path
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param username path string true "User username"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/user/get-user-by-username/{username} [get]
 func (t *Testing)UserByUsername(c *gin.Context){
 	username := c.Param("username")
 	c.JSON(http.StatusOK, helper.GenerateResponse(gin.H{
@@ -37,14 +72,40 @@ func (t *Testing)UserByUsername(c *gin.Context){
 	}, true, 0))
 }
 
+// @Summary Testing username account
+// @Description This handler Just for get account from the path with id
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param id path string true "User username account id"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/user/{id}/account [get]
 func(t *Testing)Account(c *gin.Context){
 	c.JSON(http.StatusOK, helper.GenerateResponse("Account", true, 0))
 }
 
+// @Summary Testing Post
+// @Description This handler Just for test post
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/user/add-user [post]
 func(t *Testing)AddUser(c *gin.Context){
 	c.JSON(http.StatusOK, helper.GenerateResponse("AddUser", true, 0))
 }
 
+// @Summary Testing Get user token
+// @Description This handler Just get token from header
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param token header string true "token"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/header1 [get]
 func(t *Testing)HeaderBinderWithGetHeader(c *gin.Context){
 	h := c.GetHeader("token")
 	c.JSON(http.StatusOK, helper.GenerateResponse(gin.H{
@@ -57,6 +118,16 @@ type headerBind struct{
 	Token string
 	Browser string
 }
+// @Summary Testing Get User Token and Browser
+// @Description This handler Just get token and browser from header
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param token header string true "token"
+// @Param browser header string false "browser"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/header2 [get]
 func(t *Testing)HeaderBinderWithBindHeader(c *gin.Context){
 	headerData := headerBind{}
 	err := c.ShouldBindHeader(&headerData)
@@ -70,6 +141,16 @@ func(t *Testing)HeaderBinderWithBindHeader(c *gin.Context){
 	})
 }
 
+// @Summary Testing Params query
+// @Description This handler Just for get page and tag from query
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param page query string false "get page" default(1)
+// @Param tag query string false "get tag" default(golang)
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/query1 [get]
 func(t *Testing)QueryBinderWithGetQueryArrayAndGetQuery(c *gin.Context){
 	// The query most be like this : /users?page=1&tag=go&tag=api
 	page, _:= c.GetQuery("page")  
@@ -81,6 +162,16 @@ func(t *Testing)QueryBinderWithGetQueryArrayAndGetQuery(c *gin.Context){
 		}, true, 0),
 	)	
 }
+
+// @Summary Testing User query
+// @Description This handler Just for get user data from query
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param user query string false "get user data" 
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/query2 [get]
 func(t *Testing)QueryBinderWithGetQueryMap(c *gin.Context){
 	// The query most be like this : /users?user[name]=ali&user[age]=20
 	user, _:= c.GetQueryMap("user")
@@ -91,6 +182,16 @@ func(t *Testing)QueryBinderWithGetQueryMap(c *gin.Context){
 	)	
 }
 
+// @Summary Testing Get Id and Name
+// @Description This handler get id and name from path together
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param id path string true "id"
+// @Param name path string true "name"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/uli1/{id}/{name} [get]
 func(t *Testing)UliBinderWithParam(c *gin.Context){
 	id := c.Param("id")
 	name := c.Param("name")
@@ -107,6 +208,15 @@ type person struct{
 	LastName string
 	Mobile string `binding:"required,mobile"`
 }
+// @Summary Testing for return response
+// @Description this handler hear to get response from the request
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param person1 body person true "person data"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/body1 [post]
 func(t *Testing)BodyBinderWithBindJson(c *gin.Context){
 	p := person{}
 	err := c.ShouldBindJSON(&p) 
@@ -122,6 +232,15 @@ func(t *Testing)BodyBinderWithBindJson(c *gin.Context){
 	)			
 }
 
+// @Summary Testing for return response from form
+// @Description this handler hear to get response from the request as form
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param person formData person false "person data"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/form1 [post]
 func(t *Testing)FormBinderWithBind(c *gin.Context){
 	p := person{}
 	err := c.Bind(&p)
@@ -134,6 +253,15 @@ func(t *Testing)FormBinderWithBind(c *gin.Context){
 	}, true, 0))		
 }
 
+// @Summary Testing for return response from file
+// @Description this handler hear to get response from the request as file
+// @Accept json
+// @Produce json
+// @Tags Test
+// @Param file formData file false "file data"
+// @Success 200 {object} helper.BaseResponse "Success"
+// @Failure 400 {object} []validations.ValidationError "Failure"
+// @Router /v1/test/binder/file1 [post]
 func(t *Testing)FileBinderWithFormFile(c *gin.Context){
 	file, _:= c.FormFile("file")
 	err := c.SaveUploadedFile(file,"file")

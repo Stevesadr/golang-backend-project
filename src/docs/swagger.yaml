@@ -1,0 +1,498 @@
+definitions:
+  handlers.person:
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      mobile:
+        type: string
+    required:
+    - firstName
+    - mobile
+    type: object
+  helper.BaseResponse:
+    properties:
+      error: {}
+      result: {}
+      resultCode:
+        type: integer
+      success:
+        type: boolean
+      validationError:
+        items:
+          $ref: '#/definitions/validations.ValidationError'
+        type: array
+    type: object
+  validations.ValidationError:
+    properties:
+      message:
+        type: string
+      property:
+        type: string
+      tag:
+        type: string
+      value:
+        type: string
+    type: object
+info:
+  contact:
+    email: steve.sadr@gmail.com
+    name: Steve  Sadr
+    url: https://github.com/stevesadr
+paths:
+  /v1/health/:
+    get:
+      consumes:
+      - application/json
+      description: This handler is just hear to tell system is ready
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: System ready
+      tags:
+      - Health
+    post:
+      consumes:
+      - application/json
+      description: This handler is just hear to tell post system is ready
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Post System ready
+      tags:
+      - Health
+  /v1/health/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This handler want to get id from param
+      parameters:
+      - description: User id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Get Param
+      tags:
+      - Health
+  /v1/test:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just for test
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Start Testing
+      tags:
+      - Test
+  /v1/test/binder/body1:
+    post:
+      consumes:
+      - application/json
+      description: this handler hear to get response from the request
+      parameters:
+      - description: person data
+        in: body
+        name: person1
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.person'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing for return response
+      tags:
+      - Test
+  /v1/test/binder/file1:
+    post:
+      consumes:
+      - application/json
+      description: this handler hear to get response from the request as file
+      parameters:
+      - description: file data
+        in: formData
+        name: file
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing for return response from file
+      tags:
+      - Test
+  /v1/test/binder/form1:
+    post:
+      consumes:
+      - application/json
+      description: this handler hear to get response from the request as form
+      parameters:
+      - in: formData
+        name: firstName
+        required: true
+        type: string
+      - in: formData
+        name: lastName
+        type: string
+      - in: formData
+        name: mobile
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing for return response from form
+      tags:
+      - Test
+  /v1/test/binder/header1:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just get token from header
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing Get user token
+      tags:
+      - Test
+  /v1/test/binder/header2:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just get token and browser from header
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: browser
+        in: header
+        name: browser
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing Get User Token and Browser
+      tags:
+      - Test
+  /v1/test/binder/query1:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just for get page and tag from query
+      parameters:
+      - default: "1"
+        description: get page
+        in: query
+        name: page
+        type: string
+      - default: golang
+        description: get tag
+        in: query
+        name: tag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing Params query
+      tags:
+      - Test
+  /v1/test/binder/query2:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just for get user data from query
+      parameters:
+      - description: get user data
+        in: query
+        name: user
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing User query
+      tags:
+      - Test
+  /v1/test/binder/uli1/{id}/{name}:
+    get:
+      consumes:
+      - application/json
+      description: This handler get id and name from path together
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing Get Id and Name
+      tags:
+      - Test
+  /v1/test/user/{id}/account:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just for get account from the path with id
+      parameters:
+      - description: User username account id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing username account
+      tags:
+      - Test
+  /v1/test/user/add-user:
+    post:
+      consumes:
+      - application/json
+      description: This handler Just for test post
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Testing Post
+      tags:
+      - Test
+  /v1/test/user/get-user-by-username/{username}:
+    get:
+      consumes:
+      - application/json
+      description: This handler want to get username from the path
+      parameters:
+      - description: User username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Test Get username
+      tags:
+      - Test
+  /v1/test/users:
+    get:
+      consumes:
+      - application/json
+      description: This handler Just another handler for test
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Start Testing
+      tags:
+      - Test
+  /v1/test/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This handler want to get id from the path
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseResponse'
+        "400":
+          description: Failure
+          schema:
+            items:
+              $ref: '#/definitions/validations.ValidationError'
+            type: array
+      summary: Test Get id
+      tags:
+      - Test
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
