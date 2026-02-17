@@ -14,13 +14,13 @@ type Logger interface{
 	Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
 	Warnf(template string, arg interface{})
 
-	Error(err error,cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
+	Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
 	Errorf(template string, arg interface{})	
 
-	Fatal(err error,cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
+	Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
 	Fatalf(template string, arg interface{})
 }
 
-func NewLogger(cfg config.Config) Logger {
-	return nil
+func NewLogger(cfg *config.Config) Logger {
+	return newZapLogger(cfg)
 }

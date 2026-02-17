@@ -2,13 +2,16 @@ package db
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/Stevesadr/golang-backend-project/config"
+	"github.com/Stevesadr/golang-backend-project/pkg/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
+
+
+var logger = logging.NewLogger(config.GetConfig())
 
 var dbClient *gorm.DB
 
@@ -32,8 +35,7 @@ func InitDb(cfg *config.Config) error {
 	sqldb.SetMaxIdleConns(cfg.Postgres.MaxIdleConns)
 	sqldb.SetMaxOpenConns(cfg.Postgres.MaxOpenConns)
 	sqldb.SetConnMaxLifetime(cfg.Postgres.ConnMaxLifetime * time.Minute)
-
-	log.Println("Db connection successful")
+	logger.Info(logging.Postgres, logging.Startup, "Db connection successful", nil)
 	return nil
 }
 
