@@ -16,6 +16,7 @@ type Config struct{
 	Password PasswordConfig
 	Otp      OtpConfig
 	Cors CorsConfig
+	Logger LoggerConfig
 }
 
 type PasswordConfig struct {
@@ -25,6 +26,12 @@ type PasswordConfig struct {
 	MaxLength        int
 	IncludeUppercase bool
 	IncludeLowercase bool
+}
+
+type LoggerConfig struct{
+	FilePath string
+	Encoding string
+	Level string
 }
 
 type OtpConfig struct {
