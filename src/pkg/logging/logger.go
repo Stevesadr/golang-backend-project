@@ -6,21 +6,26 @@ type Logger interface{
 	Init()
 
 	Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
-	Debugf(template string, arg interface{})
+	Debugf(template string, arg ...interface{})
 
 	Info(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
-	Infof(template string, arg interface{})
+	Infof(template string, arg ...interface{})
 
 	Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
-	Warnf(template string, arg interface{})
+	Warnf(template string, arg ...interface{})
 
 	Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
-	Errorf(template string, arg interface{})	
+	Errorf(template string, arg ...interface{})	
 
 	Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{})
-	Fatalf(template string, arg interface{})
+	Fatalf(template string, arg ...interface{})
 }
 
 func NewLogger(cfg *config.Config) Logger {
-	return newZapLogger(cfg)
+	if cfg.Logger.Logger == "zap" {
+		return newZapLogger(cfg)
+	} else if cfg.Logger.Logger == "zerolog" {
+		return newZeroLogger(cfg)
+	}
+	panic("logger not support")
 }

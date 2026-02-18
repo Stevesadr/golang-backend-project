@@ -53,7 +53,7 @@ func (l *zapLogger)Init(){
 	)
 
 	logger := zap.New(core, zap.AddCaller(),zap.AddCallerSkip(1), zap.AddStacktrace(zap.ErrorLevel)).Sugar()
-
+	logger = logger.With("AppName", "MyApp", "LoggerName", "MyApp")
 	l.logger = logger
 }
 
@@ -72,7 +72,7 @@ func(l *zapLogger)Debug(cat Category, sub SubCategory, msg string, extra map[Ext
 	params := prepareLogKey(cat, sub, extra)
 	l.logger.Debugw(msg, params...)
 }
-func(l *zapLogger)Debugf(template string, arg interface{}){
+func(l *zapLogger)Debugf(template string, arg ...interface{}){
 	l.logger.Debugf(template, arg)
 }
 
@@ -80,7 +80,7 @@ func(l *zapLogger)Info(cat Category, sub SubCategory, msg string, extra map[Extr
 	params := prepareLogKey(cat, sub, extra)
 	l.logger.Infow(msg, params...)
 }
-func(l *zapLogger)Infof(template string, arg interface{}){
+func(l *zapLogger)Infof(template string, arg ...interface{}){
 	l.logger.Infof(template, arg)
 }
 
@@ -88,7 +88,7 @@ func(l *zapLogger)Warn(cat Category, sub SubCategory, msg string, extra map[Extr
 	params := prepareLogKey(cat, sub, extra)
 	l.logger.Warnw(msg, params...)
 }
-func(l *zapLogger)Warnf(template string, arg interface{}){
+func(l *zapLogger)Warnf(template string, arg ...interface{}){
 	l.logger.Warnf(template, arg)
 }
 
@@ -96,7 +96,7 @@ func(l *zapLogger)Error(cat Category, sub SubCategory, msg string, extra map[Ext
 	params := prepareLogKey(cat, sub, extra)
 	l.logger.Errorw(msg, params...)
 }
-func(l *zapLogger)Errorf(template string, arg interface{}){
+func(l *zapLogger)Errorf(template string, arg ...interface{}){
 	l.logger.Errorf(template, arg)
 }
 
@@ -104,6 +104,6 @@ func(l *zapLogger)Fatal(cat Category, sub SubCategory, msg string, extra map[Ext
 	params := prepareLogKey(cat, sub, extra)
 	l.logger.Fatalw(msg, params...)
 }
-func(l *zapLogger)Fatalf(template string, arg interface{}){
+func(l *zapLogger)Fatalf(template string, arg ...interface{}){
 	l.logger.Fatalf(template, arg)
 }

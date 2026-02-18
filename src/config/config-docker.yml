@@ -5,6 +5,7 @@ logger:
   filePath: ../logs/log.log
   encoding: json
   level: debug
+  logger: zerolog
 cars:
   allowOrigins: "*"
 postgres:
