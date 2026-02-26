@@ -6,7 +6,7 @@ logger:
   encoding: json
   level: debug
   logger: zerolog
-cars:
+cors:
   allowOrigins: "*"
 postgres:
   host: postgres_container
