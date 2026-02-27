@@ -5,6 +5,7 @@ import (
 	"github.com/Stevesadr/golang-backend-project/config"
 	"github.com/Stevesadr/golang-backend-project/data/cache"
 	"github.com/Stevesadr/golang-backend-project/data/db"
+	"github.com/Stevesadr/golang-backend-project/data/db/migration"
 	"github.com/Stevesadr/golang-backend-project/pkg/logging"
 )
 
@@ -28,6 +29,7 @@ func main(){
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
+	migration.Up_1()
 	
 	api.InitServer(cfg)  
 }
